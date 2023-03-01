@@ -5,11 +5,21 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    PlayerControls controls;
+    [SerializeField] float jumpForce;
 
+
+    PlayerControls controls;
     Vector2 move;
 
+
+    private Rigidbody rb;
+
+    
+    bool jumpOn = true;
+
+
     public float speed = 5f;
+
 
     private void Awake()
     {
@@ -18,10 +28,31 @@ public class Player : MonoBehaviour
         controls.Gameplay.Movement.performed += ctx => move = ctx.ReadValue<Vector2>();
         controls.Gameplay.Movement.canceled += ctx => move = Vector2.zero;
 
+        controls.Gameplay.Jump.performed += ctx => jump();
+
 
 
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(gameObject.tag == "ground")
+        {
+            jumpOn = true;
+        }
+        
+    }
+
+
+    void jump()
+    {
+        if (jumpOn == true)
+        {
+            rb.velocity = Vector2.up * jumpForce;
+            jumpOn = false;
+        }
+        else return;
+    }
 
     private void Update()
     {
