@@ -7,14 +7,16 @@ public class Player : MonoBehaviour
 {
     PlayerControls controls;
 
-    Vector3 move;
+    Vector2 move;
+
+    public float speed = 5f;
 
     private void Awake()
     {
         controls = new PlayerControls();
 
-        controls.Gameplay.right.performed += ctx => move = ctx.ReadValue<Vector3>();
-        controls.Gameplay.right.canceled += ctx => move = Vector3.zero;
+        controls.Gameplay.Movement.performed += ctx => move = ctx.ReadValue<Vector2>();
+        controls.Gameplay.Movement.canceled += ctx => move = Vector2.zero;
 
 
 
@@ -23,7 +25,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Vector3 m = new Vector3(-move.x, move.y) * Time.deltaTime;
+        Vector2 m = new Vector2(move.x, move.y) * speed * Time.deltaTime;
         transform.Translate(m, Space.World);
     }
 

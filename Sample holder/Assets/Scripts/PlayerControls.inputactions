@@ -6,33 +6,6 @@
             "id": "f5b196e3-ebdc-4a8f-aab8-cc08595d8c6e",
             "actions": [
                 {
-                    "name": "left",
-                    "type": "Button",
-                    "id": "5a94cd63-a195-406f-ba59-8eae4a1a45d9",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "right",
-                    "type": "Button",
-                    "id": "a0617e25-4fd8-4349-82ff-9288f90a66e7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "50d62463-f08b-4de6-acfb-470810efb86e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Shoot",
                     "type": "Button",
                     "id": "01570902-d21a-4212-ac18-e4b8cd5b9486",
@@ -40,46 +13,97 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "c1a87e63-b652-48c4-b5e5-9b05da5eeff5",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Movement",
+                    "type": "Value",
+                    "id": "6e91bb61-309a-47f7-a23a-fcc51a122cd6",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "b6de24ef-bb84-4d8a-8866-ed0757119ea2",
-                    "path": "<Joystick>/stick/left",
+                    "id": "4d3ee1fe-1277-4ee1-bdec-94e9beec836a",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "left",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "049a82a2-3db4-4211-8659-7e2d3bd74359",
-                    "path": "<Joystick>/stick/right",
+                    "name": "2D Vector",
+                    "id": "d5e4b580-9114-422a-8b09-842c4db59ad9",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "right",
-                    "isComposite": false,
+                    "action": "Movement",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "0ba3acb2-3780-4292-8aa6-27b65c0e00a5",
-                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button2",
+                    "name": "up",
+                    "id": "53c83b00-0afe-4979-b8ea-a22786115f0b",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump",
+                    "action": "Movement",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "b41669be-b063-4ca1-9c97-c38002ad546b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "6e5dede3-5559-411c-a41e-27b2f7771b58",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "9555b6a3-7e3a-4b7a-94d7-e9f1dc1a0ce4",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
                     "id": "b9591d57-2b47-4e25-a9de-a010830969bf",
-                    "path": "<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
