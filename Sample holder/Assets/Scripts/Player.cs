@@ -14,9 +14,6 @@ public class Player : MonoBehaviour
 
     private Rigidbody rb;
 
-    
-    bool jumpOn = true;
-
 
     public float speed = 5f;
 
@@ -28,31 +25,11 @@ public class Player : MonoBehaviour
         controls.Gameplay.Movement.performed += ctx => move = ctx.ReadValue<Vector2>();
         controls.Gameplay.Movement.canceled += ctx => move = Vector2.zero;
 
-        controls.Gameplay.Jump.performed += ctx => jump();
 
 
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(gameObject.tag == "ground")
-        {
-            jumpOn = true;
-        }
-        
-    }
-
-
-    void jump()
-    {
-        if (jumpOn == true)
-        {
-            rb.velocity = Vector2.up * jumpForce;
-            jumpOn = false;
-        }
-        else return;
-    }
 
     private void Update()
     {

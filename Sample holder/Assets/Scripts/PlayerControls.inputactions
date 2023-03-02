@@ -26,47 +26,14 @@
                 {
                     "name": "Jump",
                     "type": "Button",
-                    "id": "8b6afc81-96ba-46b0-b2d4-49e2e3ed2ec2",
+                    "id": "20b26720-a5a5-403b-afc5-718930f03f0e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
-                {
-                    "name": "2D Vector",
-                    "id": "d5e4b580-9114-422a-8b09-842c4db59ad9",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "left",
-                    "id": "6e5dede3-5559-411c-a41e-27b2f7771b58",
-                    "path": "<Gamepad>/leftStick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "9555b6a3-7e3a-4b7a-94d7-e9f1dc1a0ce4",
-                    "path": "<Gamepad>/leftStick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
                 {
                     "name": "",
                     "id": "b9591d57-2b47-4e25-a9de-a010830969bf",
@@ -79,9 +46,42 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "2D Vector",
+                    "id": "b092af61-0dba-4ea7-ba8a-1bfb722972e2",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "left",
+                    "id": "c87bb02b-41a3-4a63-98f7-07d1fc37f51a",
+                    "path": "<Joystick>/stick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "786b7e98-e756-4d06-8755-998b017eb6c2",
+                    "path": "<Joystick>/stick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
-                    "id": "e282f153-e4a7-48d3-9197-001216dd17e2",
-                    "path": "<Gamepad>/buttonEast",
+                    "id": "190e6c9e-0883-4a85-ade5-9c7dc2969d97",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
