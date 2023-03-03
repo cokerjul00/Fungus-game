@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float jumpForce;
 
 
     PlayerControls controls;
@@ -16,6 +15,26 @@ public class Player : MonoBehaviour
 
 
     public float speed = 5f;
+    public int Health;
+    public int maxHealth = 100;
+
+
+
+
+    private void Start()
+    {
+        Health = maxHealth;
+    }
+
+
+    public void TakeDamage(int damage)
+    {
+        Health -= damage;
+        if(Health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
     private void Awake()
@@ -36,6 +55,8 @@ public class Player : MonoBehaviour
         Vector2 m = new Vector2(move.x, move.y) * speed * Time.deltaTime;
         transform.Translate(m, Space.World);
     }
+
+
 
     private void OnEnable()
     {
