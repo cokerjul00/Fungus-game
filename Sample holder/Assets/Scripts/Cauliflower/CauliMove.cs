@@ -6,6 +6,8 @@ using UnityEngine;
 public class CauliMove : MonoBehaviour
 {
 
+
+    public float Health = 10f;
     public GameObject Player;
     public float speed;
 
@@ -21,6 +23,16 @@ public class CauliMove : MonoBehaviour
 
     }
 
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Bullet")
+        {
+            Health--;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -28,5 +40,10 @@ public class CauliMove : MonoBehaviour
         Vector2 direction = Player.transform.position - transform.position;
 
         transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, speed * Time.deltaTime);
+
+        if (Health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
