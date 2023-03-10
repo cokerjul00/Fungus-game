@@ -7,7 +7,8 @@ public class Gun : MonoBehaviour
     public Transform bulletSpawnPoint;
     public GameObject bulletPrefab;
     public float bulletSpeed;
-
+    public AudioSource Lasercutter;
+    public AudioClip lasercutterclip;
 
     PlayerControls controls;
 
@@ -24,10 +25,6 @@ public class Gun : MonoBehaviour
 
         controls.Gameplay.Shoot.performed += ctx => PlayerShoot();
 
-
-
-
-
     }
 
 
@@ -36,6 +33,10 @@ public class Gun : MonoBehaviour
     {
             var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
             bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.up * bulletSpeed;
+
+        Lasercutter.clip = lasercutterclip;
+        Lasercutter.Play();
+       
     }
 
 
