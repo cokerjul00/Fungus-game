@@ -44,6 +44,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""WeaponSwaping"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9bfc9e1-08dd-486c-887e-85e521b5022e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -90,6 +99,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fbfd7dd6-fdf0-4734-8712-6eb87457e7c3"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponSwaping"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -100,6 +120,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Shoot = m_Gameplay.FindAction("Shoot", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
+        m_Gameplay_WeaponSwaping = m_Gameplay.FindAction("WeaponSwaping", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -161,12 +182,14 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Shoot;
     private readonly InputAction m_Gameplay_Movement;
+    private readonly InputAction m_Gameplay_WeaponSwaping;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shoot => m_Wrapper.m_Gameplay_Shoot;
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
+        public InputAction @WeaponSwaping => m_Wrapper.m_Gameplay_WeaponSwaping;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -182,6 +205,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMovement;
+                @WeaponSwaping.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeaponSwaping;
+                @WeaponSwaping.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeaponSwaping;
+                @WeaponSwaping.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeaponSwaping;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -192,6 +218,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @WeaponSwaping.started += instance.OnWeaponSwaping;
+                @WeaponSwaping.performed += instance.OnWeaponSwaping;
+                @WeaponSwaping.canceled += instance.OnWeaponSwaping;
             }
         }
     }
@@ -200,5 +229,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     {
         void OnShoot(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
+        void OnWeaponSwaping(InputAction.CallbackContext context);
     }
 }
