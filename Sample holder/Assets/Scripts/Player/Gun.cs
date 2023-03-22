@@ -5,18 +5,24 @@ using UnityEngine.InputSystem;
 
 public class Gun : MonoBehaviour
 {
-    public Transform bulletSpawnPoint;
+    public Transform LazerCutterbulletSpawnPoint;
+    public Transform PulseRiflebulletSpawnPoint;
+    public Transform meleePoint;
     public GameObject bulletPrefab;
+    public GameObject KnifePrefab;
+    public GameObject lazerCutter;
+    public GameObject pulseRifle;
     public float bulletSpeed;
-    public AudioSource Lasercutter;
-    public AudioClip lasercutterclip;
+    public AudioSource gun;
+    public AudioClip lazerCutterClip;
+    public AudioClip pulseRifleClip;
 
     bool isFiring = false;
     Coroutine automaticFireCoroutine;
 
     public float fireRate = 0.1f;
 
-    public int WeaponSelected = 0;
+    public int weaponSelected = 0;
 
     PlayerControls controls;
 
@@ -25,7 +31,8 @@ public class Gun : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        WeaponSelected = 0;
+        weaponSelected = 0;
+        SetActiveWeapon();
     }
 
     private void Awake()
@@ -36,25 +43,42 @@ public class Gun : MonoBehaviour
         controls.Gameplay.Shoot.started += ctx => PlayerShoot();
         controls.Gameplay.Shoot.canceled += ctx => StopPlayerShoot();
         controls.Gameplay.WeaponSwaping.started += ctx => WeaponSwap();
+        controls.Gameplay.Melee.started += ctx => melee();
+    }
+
+    void melee()
+    {
+        Instantiate(KnifePrefab, meleePoint.position, meleePoint.rotation);
+        Destroy(gameObject);
     }
 
     void WeaponSwap()
     {
         // Change weapon to the next one
-        WeaponSelected++;
-        if (WeaponSelected >= 6)
+        weaponSelected++;
+        if (weaponSelected >= 3)
         {
-            WeaponSelected = 0;
+            weaponSelected = 0;
         }
-        if (WeaponSelected == 2 && isFiring)
+        SetActiveWeapon();
+    }
+
+    void SetActiveWeapon()
+    {
+        switch (weaponSelected)
         {
-            // Stop automatic firing when switching to the grenade launcher
-            isFiring = false;
-            if (automaticFireCoroutine != null)
-            {
-                StopCoroutine(automaticFireCoroutine);
-                automaticFireCoroutine = null;
-            }
+            case 0:
+                lazerCutter.SetActive(false);
+                pulseRifle.SetActive(false);
+                break;
+            case 1:
+                lazerCutter.SetActive(true);
+                pulseRifle.SetActive(false);
+                break;
+            case 2:
+                lazerCutter.SetActive(false);
+                pulseRifle.SetActive(true);
+                break;
         }
     }
 
@@ -62,16 +86,18 @@ public class Gun : MonoBehaviour
     {
         while (isFiring)
         {
-            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-            bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.up * bulletSpeed;
+            var bullet = Instantiate(bulletPrefab, PulseRiflebulletSpawnPoint.position, PulseRiflebulletSpawnPoint.rotation);
+            bullet.GetComponent<Rigidbody>().velocity = PulseRiflebulletSpawnPoint.up * bulletSpeed;
             yield return new WaitForSeconds(fireRate);
+            gun.clip = pulseRifleClip;
+            gun.Play();
         }
         automaticFireCoroutine = null;
     }
 
     void PlayerShoot()
     {
-        if (WeaponSelected == 2)
+        if (weaponSelected == 2)
         {
             // Start automatic firing
             if (!isFiring)
@@ -80,18 +106,18 @@ public class Gun : MonoBehaviour
                 automaticFireCoroutine = StartCoroutine(ShootFullyAutomatic());
             }
         }
-        else if (WeaponSelected == 1)
+        if (weaponSelected == 1)
         {
-            var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-            bullet.GetComponent<Rigidbody>().velocity = bulletSpawnPoint.up * bulletSpeed;
-            Lasercutter.clip = lasercutterclip;
-            Lasercutter.Play();
+            var bullet = Instantiate(bulletPrefab, LazerCutterbulletSpawnPoint.position, LazerCutterbulletSpawnPoint.rotation);
+            bullet.GetComponent<Rigidbody>().velocity = LazerCutterbulletSpawnPoint.up * bulletSpeed;
+            gun.clip = lazerCutterClip;
+            gun.Play();
         }
     }
 
     void StopPlayerShoot()
     {
-        if (WeaponSelected == 2)
+        if (weaponSelected == 2)
         {
             // Stop automatic firing
             isFiring = false;

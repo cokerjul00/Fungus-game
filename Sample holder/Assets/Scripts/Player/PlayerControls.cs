@@ -53,6 +53,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Melee"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9590a1c-a672-4305-8e3b-7bd55b463fb1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -110,6 +119,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""WeaponSwaping"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""696bc7ea-df4d-4275-9b67-20a6e6b39583"",
+                    ""path"": ""<HID::DragonRise Inc.   Generic   USB  Joystick  >/button4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Melee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -121,6 +141,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         m_Gameplay_Shoot = m_Gameplay.FindAction("Shoot", throwIfNotFound: true);
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_WeaponSwaping = m_Gameplay.FindAction("WeaponSwaping", throwIfNotFound: true);
+        m_Gameplay_Melee = m_Gameplay.FindAction("Melee", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,6 +204,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Shoot;
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_WeaponSwaping;
+    private readonly InputAction m_Gameplay_Melee;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -190,6 +212,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Gameplay_Shoot;
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @WeaponSwaping => m_Wrapper.m_Gameplay_WeaponSwaping;
+        public InputAction @Melee => m_Wrapper.m_Gameplay_Melee;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -208,6 +231,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @WeaponSwaping.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeaponSwaping;
                 @WeaponSwaping.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeaponSwaping;
                 @WeaponSwaping.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWeaponSwaping;
+                @Melee.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMelee;
+                @Melee.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMelee;
+                @Melee.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMelee;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -221,6 +247,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @WeaponSwaping.started += instance.OnWeaponSwaping;
                 @WeaponSwaping.performed += instance.OnWeaponSwaping;
                 @WeaponSwaping.canceled += instance.OnWeaponSwaping;
+                @Melee.started += instance.OnMelee;
+                @Melee.performed += instance.OnMelee;
+                @Melee.canceled += instance.OnMelee;
             }
         }
     }
@@ -230,5 +259,6 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnWeaponSwaping(InputAction.CallbackContext context);
+        void OnMelee(InputAction.CallbackContext context);
     }
 }
