@@ -6,7 +6,8 @@ using UnityEngine;
 public class CauliMove : MonoBehaviour
 {
 
-
+    public float Damage = 2;
+    public float DamageTimer;
     public float Health = 10f;
     public GameObject Player;
     public float speed;
@@ -23,13 +24,30 @@ public class CauliMove : MonoBehaviour
 
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Fire")
+        {
+            if (DamageTimer >= 0)
+            {
+                DamageTimer -= Time.deltaTime;
+            }
+            else
+            {
+                Health -= Damage;
+                DamageTimer = 0.1f;
+            }
+        }
+    }
 
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Bullet")
         {
+
             Health--;
+
         }
     }
 

@@ -12,12 +12,15 @@ public class Gun : MonoBehaviour
     public GameObject KnifePrefab;
     public GameObject lazerCutter;
     public GameObject pulseRifle;
+    public GameObject FlameThrower;
+    public GameObject FlameRadius;
+    public bool flameactive;
     public float bulletSpeed;
     public AudioSource gun;
     public AudioClip lazerCutterClip;
     public AudioClip pulseRifleClip;
 
-    bool isFiring = false;
+    public bool isFiring = false;
     Coroutine automaticFireCoroutine;
 
     public float fireRate = 0.1f;
@@ -34,6 +37,21 @@ public class Gun : MonoBehaviour
         weaponSelected = 0;
         SetActiveWeapon();
     }
+
+    private void Update()
+    {
+        if (flameactive == true && isFiring)
+        {
+            FlameRadius.SetActive(true);
+        }
+
+        if (flameactive == false || isFiring == false)
+        {
+            FlameRadius.SetActive(false);
+        }
+    }
+
+
 
     private void Awake()
     {
@@ -56,7 +74,7 @@ public class Gun : MonoBehaviour
     {
         // Change weapon to the next one
         weaponSelected++;
-        if (weaponSelected >= 3)
+        if (weaponSelected >= 4)
         {
             weaponSelected = 0;
         }
@@ -68,16 +86,28 @@ public class Gun : MonoBehaviour
         switch (weaponSelected)
         {
             case 0:
+                FlameThrower.SetActive(false);
                 lazerCutter.SetActive(false);
                 pulseRifle.SetActive(false);
+                flameactive = false;
                 break;
             case 1:
+                FlameThrower.SetActive(false);
                 lazerCutter.SetActive(true);
                 pulseRifle.SetActive(false);
+                flameactive = false;
                 break;
             case 2:
+                FlameThrower.SetActive(false);
                 lazerCutter.SetActive(false);
                 pulseRifle.SetActive(true);
+                flameactive = false;
+                break;
+            case 3:
+                FlameThrower.SetActive(true);
+                lazerCutter.SetActive(false);
+                pulseRifle.SetActive(false);
+                flameactive = true;
                 break;
         }
     }
@@ -97,6 +127,17 @@ public class Gun : MonoBehaviour
 
     void PlayerShoot()
     {
+
+        if (weaponSelected == 3)
+        {
+            if (!isFiring)
+            {
+                isFiring = true;
+            }
+
+        }
+
+
         if (weaponSelected == 2)
         {
             // Start automatic firing
@@ -117,6 +158,12 @@ public class Gun : MonoBehaviour
 
     void StopPlayerShoot()
     {
+
+        if (weaponSelected == 3)
+        {
+            isFiring = false;
+        }
+
         if (weaponSelected == 2)
         {
             // Stop automatic firing
