@@ -3,15 +3,20 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Fire
+  - ground
+  - Bullet
+  - Enemy
+  - Knife
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - knife
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 

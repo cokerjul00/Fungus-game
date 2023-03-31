@@ -7,18 +7,24 @@ public class Gun : MonoBehaviour
 {
     public Transform LazerCutterbulletSpawnPoint;
     public Transform PulseRiflebulletSpawnPoint;
-    public Transform meleePoint;
     public GameObject bulletPrefab;
     public GameObject KnifePrefab;
     public GameObject lazerCutter;
     public GameObject pulseRifle;
     public GameObject FlameThrower;
     public GameObject FlameRadius;
+    public GameObject ForceGun;
     public bool flameactive;
     public float bulletSpeed;
     public AudioSource gun;
     public AudioClip lazerCutterClip;
     public AudioClip pulseRifleClip;
+    public float knifespeed;
+    public int SaveEquip;
+    public bool MelleSwap;
+    public GameObject ForcebulletPrefab;
+    public Transform ForceGunProjectileSpawn;
+    public float BulletLifeSpan;
 
     public bool isFiring = false;
     Coroutine automaticFireCoroutine;
@@ -36,6 +42,7 @@ public class Gun : MonoBehaviour
     {
         weaponSelected = 0;
         SetActiveWeapon();
+        KnifePrefab.SetActive(false);
     }
 
     private void Update()
@@ -49,9 +56,21 @@ public class Gun : MonoBehaviour
         {
             FlameRadius.SetActive(false);
         }
+
+
+        if (knifespeed >= 0 && MelleSwap == true)
+        {
+            knifespeed -= Time.deltaTime;
+        }
+        else if (knifespeed <= 0 && MelleSwap == true)
+        {
+            KnifePrefab.SetActive(false);
+            weaponSelected = SaveEquip;
+            SetActiveWeapon();
+            MelleSwap = false;
+        }
+
     }
-
-
 
     private void Awake()
     {
@@ -66,17 +85,23 @@ public class Gun : MonoBehaviour
 
     void melee()
     {
-        Instantiate(KnifePrefab, meleePoint.position, meleePoint.rotation);
-        Destroy(gameObject);
+        MelleSwap = true;
+        SaveEquip = weaponSelected;
+        KnifePrefab.SetActive(true);
+        knifespeed = .1f;
+        weaponSelected = 0;
+        SetActiveWeapon();
+        
     }
 
     void WeaponSwap()
     {
         // Change weapon to the next one
         weaponSelected++;
-        if (weaponSelected >= 4)
+        if (weaponSelected >= 5)
         {
             weaponSelected = 0;
+            
         }
         SetActiveWeapon();
     }
@@ -90,24 +115,35 @@ public class Gun : MonoBehaviour
                 lazerCutter.SetActive(false);
                 pulseRifle.SetActive(false);
                 flameactive = false;
+                ForceGun.SetActive(false);
                 break;
             case 1:
                 FlameThrower.SetActive(false);
                 lazerCutter.SetActive(true);
                 pulseRifle.SetActive(false);
                 flameactive = false;
+                ForceGun.SetActive(false);
                 break;
             case 2:
                 FlameThrower.SetActive(false);
                 lazerCutter.SetActive(false);
                 pulseRifle.SetActive(true);
                 flameactive = false;
+                ForceGun.SetActive(false);
                 break;
             case 3:
                 FlameThrower.SetActive(true);
                 lazerCutter.SetActive(false);
                 pulseRifle.SetActive(false);
                 flameactive = true;
+                ForceGun.SetActive(false);
+                break;
+            case 4:
+                FlameThrower.SetActive(false);
+                lazerCutter.SetActive(false);
+                pulseRifle.SetActive(false);
+                flameactive = false;
+                ForceGun.SetActive(true);
                 break;
         }
     }
@@ -119,6 +155,8 @@ public class Gun : MonoBehaviour
             var bullet = Instantiate(bulletPrefab, PulseRiflebulletSpawnPoint.position, PulseRiflebulletSpawnPoint.rotation);
             bullet.GetComponent<Rigidbody>().velocity = PulseRiflebulletSpawnPoint.up * bulletSpeed;
             yield return new WaitForSeconds(fireRate);
+            Destroy(bullet, BulletLifeSpan);
+
             gun.clip = pulseRifleClip;
             gun.Play();
         }
@@ -127,6 +165,14 @@ public class Gun : MonoBehaviour
 
     void PlayerShoot()
     {
+        if (weaponSelected == 4)
+        {
+            var bullet = Instantiate(ForcebulletPrefab, ForceGunProjectileSpawn.position, ForceGunProjectileSpawn.rotation);
+            bullet.GetComponent<Rigidbody>().velocity = ForceGunProjectileSpawn.right * bulletSpeed;
+            Destroy(bullet, BulletLifeSpan);
+            
+        }
+
 
         if (weaponSelected == 3)
         {
@@ -151,8 +197,10 @@ public class Gun : MonoBehaviour
         {
             var bullet = Instantiate(bulletPrefab, LazerCutterbulletSpawnPoint.position, LazerCutterbulletSpawnPoint.rotation);
             bullet.GetComponent<Rigidbody>().velocity = LazerCutterbulletSpawnPoint.up * bulletSpeed;
+            
             gun.clip = lazerCutterClip;
             gun.Play();
+            Destroy(bullet, BulletLifeSpan);
         }
     }
 

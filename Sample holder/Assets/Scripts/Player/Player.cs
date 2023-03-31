@@ -27,14 +27,7 @@ public class Player : MonoBehaviour
     }
 
 
-    public void TakeDamage(int damage)
-    {
-        Health -= damage;
-        if(Health <= 0)
-        {
-            Destroy(gameObject);
-        }
-    }
+
 
 
     private void Awake()
@@ -52,6 +45,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+
+        if (Health <= 0)
+        {
+            Destroy(gameObject);
+        }
+
+
         Vector2 m = new Vector2(move.x, move.y) * speed * Time.deltaTime;
         transform.Translate(m, Space.World);
     }
