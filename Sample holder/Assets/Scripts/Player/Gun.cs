@@ -19,6 +19,7 @@ public class Gun : MonoBehaviour
     public AudioSource gun;
     public AudioClip lazerCutterClip;
     public AudioClip pulseRifleClip;
+    public AudioClip ForceGunFireClip;
     public float knifespeed;
     public int SaveEquip;
     public bool MelleSwap;
@@ -170,7 +171,9 @@ public class Gun : MonoBehaviour
             var bullet = Instantiate(ForcebulletPrefab, ForceGunProjectileSpawn.position, ForceGunProjectileSpawn.rotation);
             bullet.GetComponent<Rigidbody>().velocity = ForceGunProjectileSpawn.right * bulletSpeed;
             Destroy(bullet, BulletLifeSpan);
-            
+            gun.clip = ForceGunFireClip;
+            gun.Play();
+
         }
 
 
