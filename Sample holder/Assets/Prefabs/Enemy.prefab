@@ -132,7 +132,7 @@ MonoBehaviour:
   DamageTimer: 0
   PlayerDamageTimer: 0
   Health: 10
-  Player: {fileID: 0}
+  Player: {fileID: 5044686403672634411, guid: 20d8a4fd621d2404d9546786d5611ccd, type: 3}
   speed: 3
   thrust: 50000
   rb: {fileID: 4127991384742919684}
