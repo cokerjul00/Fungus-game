@@ -7,6 +7,7 @@ public class Gun : MonoBehaviour
 {
     public Transform LazerCutterbulletSpawnPoint;
     public Transform PulseRiflebulletSpawnPoint;
+
     public GameObject bulletPrefab;
     public GameObject KnifePrefab;
     public GameObject lazerCutter;
@@ -14,6 +15,7 @@ public class Gun : MonoBehaviour
     public GameObject FlameThrower;
     public GameObject FlameRadius;
     public GameObject ForceGun;
+
     public bool flameactive;
     public float bulletSpeed;
     public AudioSource gun;
@@ -26,6 +28,9 @@ public class Gun : MonoBehaviour
     public GameObject ForcebulletPrefab;
     public Transform ForceGunProjectileSpawn;
     public float BulletLifeSpan;
+    public float FlameTimer = 5f;
+    public float FlameCooldown = 20f;
+    public bool FireFuel = true;
 
     public bool isFiring = false;
     Coroutine automaticFireCoroutine;
@@ -48,14 +53,35 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
-        if (flameactive == true && isFiring)
+        if(FlameCooldown <= 0)
+        {
+            FireFuel = true;
+            FlameTimer = 2;
+            FlameCooldown = 10;
+        }
+
+        if (FlameTimer <= 0)
+        {
+            if (FireFuel)
+            {FireFuel = false;
+                FlameRadius.SetActive(false);
+
+            }
+
+            FlameCooldown -= Time.deltaTime;
+        }
+
+        if (flameactive == true && isFiring && FireFuel)
         {
             FlameRadius.SetActive(true);
+            if (FlameTimer >= 0)
+                FlameTimer -= Time.deltaTime;
         }
 
         if (flameactive == false || isFiring == false)
         {
             FlameRadius.SetActive(false);
+            
         }
 
 

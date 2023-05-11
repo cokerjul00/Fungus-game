@@ -18,7 +18,6 @@ public class PolyMovement : MonoBehaviour
     void Start()
     {
         SporeDeploy = false;
-        Spores.Stop();
     }
 
     // Update is called once per frame
@@ -30,9 +29,9 @@ public class PolyMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && SporeDeploy == false)
         {
-
+            SporeDeploy = true;
             Instantiate(EnemyPrefab, PolyEnemySpawn.position, PolyEnemySpawn.rotation);
 
             Instantiate(EnemyPrefab, PolyEnemySpawn1.position, PolyEnemySpawn1.rotation);

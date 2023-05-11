@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - Enemy
   - Knife
+  - Force
   layers:
   - Default
   - TransparentFX
@@ -17,10 +18,10 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
-  - 
-  - 
-  - 
+  - Lobster
+  - Spore
+  - Poly
+  - Cauli
   - 
   - 
   - 
