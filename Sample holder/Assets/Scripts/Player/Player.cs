@@ -27,7 +27,13 @@ public class Player : MonoBehaviour
     }
 
 
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Spore")
+        {
+            Health -= 8;
+        }
+    }
 
 
     private void Awake()
