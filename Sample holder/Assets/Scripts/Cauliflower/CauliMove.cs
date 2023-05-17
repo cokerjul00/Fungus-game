@@ -48,7 +48,7 @@ public class CauliMove : MonoBehaviour
         if (collision.gameObject.tag == "Bullet")
         {
             Destroy(collision.gameObject);
-            Health--;
+            Health -= .5f;
 
         }
 

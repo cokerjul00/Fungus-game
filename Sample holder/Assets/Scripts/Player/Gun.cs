@@ -22,6 +22,7 @@ public class Gun : MonoBehaviour
     public AudioClip lazerCutterClip;
     public AudioClip pulseRifleClip;
     public AudioClip ForceGunFireClip;
+    public AudioClip FlameThromwer;
     public float knifespeed;
     public int SaveEquip;
     public bool MelleSwap;
@@ -65,10 +66,12 @@ public class Gun : MonoBehaviour
             if (FireFuel)
             {FireFuel = false;
                 FlameRadius.SetActive(false);
+                
 
             }
 
             FlameCooldown -= Time.deltaTime;
+
         }
 
         if (flameactive == true && isFiring && FireFuel)
@@ -76,12 +79,15 @@ public class Gun : MonoBehaviour
             FlameRadius.SetActive(true);
             if (FlameTimer >= 0)
                 FlameTimer -= Time.deltaTime;
+            
+
         }
 
         if (flameactive == false || isFiring == false)
         {
             FlameRadius.SetActive(false);
-            
+           
+
         }
 
 
@@ -164,6 +170,7 @@ public class Gun : MonoBehaviour
                 pulseRifle.SetActive(false);
                 flameactive = true;
                 ForceGun.SetActive(false);
+                
                 break;
             case 4:
                 FlameThrower.SetActive(false);
@@ -208,6 +215,7 @@ public class Gun : MonoBehaviour
             if (!isFiring)
             {
                 isFiring = true;
+                
             }
 
         }

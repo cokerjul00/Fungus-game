@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -54,15 +55,27 @@ public class Player : MonoBehaviour
 
         if (Health <= 0)
         {
+
             Destroy(gameObject);
+            
         }
 
 
+        
+
         Vector2 m = new Vector2(move.x, move.y) * speed * Time.deltaTime;
         transform.Translate(m, Space.World);
+
+
     }
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "NextLevel")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
 
     private void OnEnable()
     {

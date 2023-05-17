@@ -30,6 +30,11 @@ public class SporeScript : MonoBehaviour
             Destroy(gameObject);
 
         }
+        if (other.gameObject.tag == "Fire")
+        {
+            Destroy(gameObject);
+
+        }
     }
 
     // Update is called once per frame
